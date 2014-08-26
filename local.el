@@ -32,6 +32,13 @@
  '(markdown-header-face-5 ((t (:inherit org-level-5))))
  '(markdown-header-face-6 ((t (:inherit org-level-6))))
 )
+
+;; js2-mode
+(load-file (expand-file-name "~/.emacs.d/modules/js2-mode/js2-mode.elc"))
+(autoload 'js2-mode "js2-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
+
 ;; load environment value
 (load-file (expand-file-name "~/.emacs.d/shellenv.el"))
 (dolist (path (split-string (getenv "PATH") ":"))

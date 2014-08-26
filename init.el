@@ -45,6 +45,21 @@
 (add-to-list 'eshell-output-filter-functions 'eshell-handle-ansi-color)
 
 ;---------------------------------------------------------
+;; バッファの再読み込み
+(defun revert-buffer-no-confirm (&optional force-reverting)
+  "Interactive call to revert-buffer. Ignoring the auto-save
+ file and not requesting for confirmation. When the current buffer
+ is modified, the command refuses to revert it, unless you specify
+ the optional argument: force-reverting to true."
+  (interactive "P")
+  ;;(message "force-reverting value is %s" force-reverting)
+  (if (or force-reverting (not (buffer-modified-p)))
+      (revert-buffer :ignore-auto :noconfirm)
+    (error "The buffer has been modified")))
+
+(global-set-key (kbd "<f5>") 'revert-buffer-no-confirm)
+
+;---------------------------------------------------------
 ;; 編集行をハイライト
 (defface hlline-face
   '((((class color)
@@ -178,6 +193,10 @@
 	     (setq c-basic-offset 2) 
              ;; RET キーで自動改行+インデント
              (define-key c-mode-base-map "\C-m" 'newline-and-indent) ))
+
+;; Java
+(add-to-list 'auto-mode-alist '("\\.ja$" . java-mode))
+
 
 ;; f90
 (add-hook
